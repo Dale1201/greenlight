@@ -38,14 +38,10 @@ func main() {
 		logger: logger,
 	}
 
-	// Declare new servemux
-	mux := http.NewServeMux()
-	mux.HandleFunc("/v1/healthcheck", app.healthcheckHandler)
-
 	// Declare HTTP server
 	srv := &http.Server{
 		Addr:         fmt.Sprintf(":%d", cfg.port),
-		Handler:      mux,
+		Handler:      app.routes(),
 		IdleTimeout:  time.Minute,
 		ReadTimeout:  time.Second * 10,
 		WriteTimeout: time.Second * 30,
